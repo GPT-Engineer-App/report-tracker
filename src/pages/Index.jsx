@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, Container, Flex, FormControl, FormLabel, Heading, Input, List, ListItem, Text, Select } from "@chakra-ui/react";
+import { Box, Button, Container, Flex, FormControl, FormLabel, Heading, Input, List, ListItem, Text, Select, ButtonGroup } from "@chakra-ui/react";
 import { FaPlus, FaTrash } from "react-icons/fa";
 
 // Helper function to calculate downtime duration in minutes
@@ -79,11 +79,15 @@ const Index = () => {
         </FormControl>
 
         <FormControl isRequired mb={4}>
-          <FormLabel htmlFor="category">Category</FormLabel>
-          <Select id="category" placeholder="Select category" mb={4} value={category} onChange={(e) => setCategory(e.target.value)}>
-            <option value="Electrical Power Surge/Outage">Electrical Power Surge/Outage</option>
-            <option value="Electrical Electrical Overload">Electrical Electrical Overload</option>
-          </Select>
+          <FormLabel>Category</FormLabel>
+          <ButtonGroup mb={4}>
+            <Button colorScheme={category === "Electrical Power Surge/Outage" ? "blue" : "gray"} onClick={() => setCategory("Electrical Power Surge/Outage")} isActive={category === "Electrical Power Surge/Outage"}>
+              Electrical Power Surge/Outage
+            </Button>
+            <Button colorScheme={category === "Electrical Electrical Overload" ? "blue" : "gray"} onClick={() => setCategory("Electrical Electrical Overload")} isActive={category === "Electrical Electrical Overload"}>
+              Electrical Electrical Overload
+            </Button>
+          </ButtonGroup>
         </FormControl>
 
         <FormControl mb={6}>

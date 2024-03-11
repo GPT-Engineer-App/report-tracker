@@ -11,6 +11,8 @@ const calculateDowntimeDuration = (from, to) => {
 
 const Index = () => {
   const [reports, setReports] = useState([]);
+  const [category, setCategory] = useState("");
+  const [description, setDescription] = useState("");
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
 
@@ -25,10 +27,14 @@ const Index = () => {
       asset: e.target.asset.value,
       from,
       to,
+      category,
+      description,
       downtimeDuration,
       id: Date.now(),
     };
     setReports([...reports, newReport]);
+    setCategory("");
+    setDescription("");
     setFrom("");
     setTo("");
   };
@@ -64,9 +70,17 @@ const Index = () => {
           <Input id="from" type="datetime-local" value={from} onChange={(e) => setFrom(e.target.value)} />
         </FormControl>
 
-        <FormControl isRequired mb={6}>
-          <FormLabel htmlFor="to">To</FormLabel>
-          <Input id="to" type="datetime-local" value={to} onChange={(e) => setTo(e.target.value)} />
+        <FormControl isRequired mb={4}>
+          <FormLabel htmlFor="category">Category</FormLabel>
+          <Select id="category" placeholder="Select category" mb={4} value={category} onChange={(e) => setCategory(e.target.value)}>
+            <option value="Electrical Power Surge/Outage">Electrical Power Surge/Outage</option>
+            <option value="Electrical Electrical Overload">Electrical Electrical Overload</option>
+          </Select>
+        </FormControl>
+
+        <FormControl mb={6}>
+          <FormLabel htmlFor="description">Description</FormLabel>
+          <Input id="description" type="text" value={description} onChange={(e) => setDescription(e.target.value)} />
         </FormControl>
 
         <Button leftIcon={<FaPlus />} colorScheme="blue" type="submit" isDisabled={!from || !to || new Date(from) >= new Date(to)}>
@@ -85,6 +99,12 @@ const Index = () => {
                 <Text>{report.area}</Text>
                 <Text fontWeight="bold">Asset:</Text>
                 <Text>{report.asset}</Text>
+                <Text fontWeight="bold">From:</Text>
+                <Text>{new Date(report.from).toLocaleString()}</Text>
+                <Text fontWeight="bold">Category:</Text>
+                <Text>{report.category}</Text>
+                <Text fontWeight="bold">Description:</Text>
+                <Text>{report.description}</Text>
                 <Text fontWeight="bold">From:</Text>
                 <Text>{new Date(report.from).toLocaleString()}</Text>
                 <Text fontWeight="bold">To:</Text>

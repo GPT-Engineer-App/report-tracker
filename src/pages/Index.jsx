@@ -10,6 +10,7 @@ const calculateDowntimeDuration = (from, to) => {
 };
 
 const Index = () => {
+  const [image, setImage] = useState(null);
   const [reports, setReports] = useState([]);
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
@@ -30,8 +31,10 @@ const Index = () => {
       category,
       description,
       downtimeDuration,
+      image,
       id: Date.now(),
     };
+    setImage(null);
     setReports([...reports, newReport]);
     setCategory("");
     setDescription("");
@@ -83,7 +86,12 @@ const Index = () => {
           <Input id="description" type="text" value={description} onChange={(e) => setDescription(e.target.value)} />
         </FormControl>
 
-        <Button leftIcon={<FaPlus />} colorScheme="blue" type="submit" isDisabled={!from || !to || new Date(from) >= new Date(to)}>
+        <FormControl mb={4}>
+          <FormLabel htmlFor="image">Image Upload</FormLabel>
+          <Input id="image" type="file" onChange={(e) => setImage(e.target.files[0])} />
+        </FormControl>
+
+        <Button leftIcon={<FaPlus />} colorScheme="blue" type="submit" isDisabled={!from || !to || !image || new Date(from) >= new Date(to)}>
           Add Report
         </Button>
       </Box>

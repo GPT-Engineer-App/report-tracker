@@ -74,6 +74,11 @@ const Index = () => {
         </FormControl>
 
         <FormControl isRequired mb={4}>
+          <FormLabel htmlFor="to">To</FormLabel>
+          <Input id="to" type="datetime-local" value={to} onChange={(e) => setTo(e.target.value)} />
+        </FormControl>
+
+        <FormControl isRequired mb={4}>
           <FormLabel htmlFor="category">Category</FormLabel>
           <Select id="category" placeholder="Select category" mb={4} value={category} onChange={(e) => setCategory(e.target.value)}>
             <option value="Electrical Power Surge/Outage">Electrical Power Surge/Outage</option>

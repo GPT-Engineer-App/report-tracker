@@ -15,6 +15,7 @@ const Index = () => {
   const [image, setImage] = useState(null);
   const [reports, setReports] = useState([]);
   const [category, setCategory] = useState("");
+  const [rootCause, setRootCause] = useState("");
   const [description, setDescription] = useState("");
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
@@ -28,6 +29,7 @@ const Index = () => {
     setFrom(event.from);
     setTo(event.to);
     setCategory(event.category);
+    setRootCause(event.rootCause);
     setDescription(event.description);
     setEventId(event.id);
     closeModal();
@@ -46,6 +48,7 @@ const Index = () => {
       from,
       to,
       category,
+      rootCause,
       description,
       downtimeDuration,
       image,
@@ -111,6 +114,15 @@ const Index = () => {
           </ButtonGroup>
         </FormControl>
 
+        <FormControl isRequired mb={4}>
+          <FormLabel htmlFor="rootCause">Root Cause</FormLabel>
+          <Select id="rootCause" placeholder="Select root cause" value={rootCause} onChange={(e) => setRootCause(e.target.value)}>
+            <option value="Cause1">Cause1</option>
+            <option value="Cause2">Cause2</option>
+            <option value="Cause3">Cause3</option>
+          </Select>
+        </FormControl>
+
         <FormControl mb={6}>
           <FormLabel htmlFor="description">Description</FormLabel>
           <Input id="description" type="text" value={description} onChange={(e) => setDescription(e.target.value)} />
@@ -146,6 +158,8 @@ const Index = () => {
                 <Text>{new Date(report.from).toLocaleString()}</Text>
                 <Text fontWeight="bold">Category:</Text>
                 <Text>{report.category}</Text>
+                <Text fontWeight="bold">Root Cause:</Text>
+                <Text>{report.rootCause}</Text>
                 <Text fontWeight="bold">Description:</Text>
                 <Text>{report.description}</Text>
                 <Text fontWeight="bold">From:</Text>

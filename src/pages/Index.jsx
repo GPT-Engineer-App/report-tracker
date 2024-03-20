@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Box, Button, Container, Flex, FormControl, FormLabel, Heading, Input, List, ListItem, Text, Select, ButtonGroup } from "@chakra-ui/react";
+import { Box, Button, Container, Flex, FormControl, FormLabel, Heading, Input, List, ListItem, Text, Select, ButtonGroup, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter } from "@chakra-ui/react";
 import { FaPlus, FaTrash } from "react-icons/fa";
+import EventModal from "../components/EventModal";
 
 // Helper function to calculate downtime duration in minutes
 const calculateDowntimeDuration = (from, to) => {
@@ -16,6 +17,18 @@ const Index = () => {
   const [description, setDescription] = useState("");
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+  const handleEventSelect = (event) => {
+    setFrom(event.from);
+    setTo(event.to);
+    setCategory(event.category);
+    setDescription(event.description);
+    closeModal();
+  };
 
   // Function to handle report submission
   // Function to handle report submission
@@ -50,6 +63,10 @@ const Index = () => {
   return (
     <Container maxW="container.md" py={8}>
       <Heading mb={6}>Downtime Reports</Heading>
+      <Button onClick={openModal} mb={6}>
+        Load Events
+      </Button>
+      <EventModal isOpen={isModalOpen} onClose={closeModal} onEventSelect={handleEventSelect} />
       <Box as="form" onSubmit={handleSubmit} mb={6}>
         <FormControl isRequired mb={4}>
           <FormLabel htmlFor="area">Area</FormLabel>

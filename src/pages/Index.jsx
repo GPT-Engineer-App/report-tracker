@@ -29,9 +29,17 @@ const Index = () => {
     setFrom(event.from);
     setTo(event.to);
     setCategory(event.category);
-    setRootCause(event.rootCause);
     setDescription(event.description);
     setEventId(event.id);
+
+    if (event.category === "Mechanical") {
+      setRootCause("");
+    } else if (event.category === "Electrical") {
+      setRootCause("Power Surge/Outage");
+    } else {
+      setRootCause("");
+    }
+
     closeModal();
   };
 
@@ -120,9 +128,22 @@ const Index = () => {
         <FormControl isRequired mb={4}>
           <FormLabel htmlFor="rootCause">Root Cause</FormLabel>
           <Select id="rootCause" placeholder="Select root cause" value={rootCause} onChange={(e) => setRootCause(e.target.value)}>
-            <option value="Cause1">Cause1</option>
-            <option value="Cause2">Cause2</option>
-            <option value="Cause3">Cause3</option>
+            {category === "Mechanical" && (
+              <>
+                <option value="Wear and Tear">Wear and Tear</option>
+                <option value="Lubrication Failure">Lubrication Failure</option>
+                <option value="Misalignment of Shafts">Misalignment of Shafts</option>
+                <option value="Overheating of Parts">Overheating of Parts</option>
+              </>
+            )}
+            {category === "Electrical" && (
+              <>
+                <option value="Power Surge/Outage">Power Surge/Outage</option>
+                <option value="Electrical Overload">Electrical Overload</option>
+                <option value="Wiring Issues">Wiring Issues</option>
+                <option value="Component Failure">Component Failure</option>
+              </>
+            )}
           </Select>
         </FormControl>
 

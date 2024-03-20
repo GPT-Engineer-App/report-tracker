@@ -132,10 +132,7 @@ const Index = () => {
             <Flex justify="space-between" align="center">
               <Box>
                 <Text fontWeight="bold">Report ID:</Text>
-                <Text fontWeight="bold">Report ID:</Text>
                 <Text>{report.reportId}</Text>
-                <Text fontWeight="bold">Event ID:</Text>
-                <Text>{report.eventId}</Text>
                 <Text fontWeight="bold">Event ID:</Text>
                 <Text>{report.eventId}</Text>
                 <Text fontWeight="bold">Area:</Text>

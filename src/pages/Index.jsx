@@ -1,10 +1,14 @@
-import { Box, Text } from "@chakra-ui/react";
+import React from "react";
+import { Box, Text, Button } from "@chakra-ui/react";
 
-function IndexPage({ report }) {
+function IndexPage() {
   return (
-    <Box>
-      <Text fontWeight="bold">Reason Code:</Text>
-      <Text>{report.reasonCode}</Text>
+    <Box p={5}>
+      <Text fontWeight="bold" mb={4}>
+        Downtime Report Form
+      </Text>
+      <Button colorScheme="blue">Load Events</Button>
+      {}
     </Box>
   );
 }

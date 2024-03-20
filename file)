@@ -1,0 +1,16 @@
+[
+  {
+    "category": "Electrical",
+    "reasonCodes": [
+      "Power Surge/Outage",
+      "Electrical Overload"
+    ]
+  },
+  {
+    "category": "Mechanical",
+    "reasonCodes": [
+      "Bearing Failure",
+      "Lubrication Failure"
+    ]
+  }
+]

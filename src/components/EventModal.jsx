@@ -1,7 +1,23 @@
-import React, { useState } from "react";
-import { Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, FormControl, FormLabel, Input, List, ListItem } from "@chakra-ui/react";
+import React, { useState, useEffect } from "react";
+import { Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, FormControl, FormLabel, Input, List, ListItem, Select } from "@chakra-ui/react";
 
 const EventModal = ({ isOpen, onClose, onEventSelect }) => {
+  const categories = {
+    "Electrical": [
+      "Power Surge/Outage",
+      "Electrical Overload",
+      "Wiring Issue"
+    ],
+    "Mechanical": [
+      "Motor Failure",
+      "Pump Leak",
+      "Bearing Damage"
+    ],
+   
+  };
+  
+  const [selectedCategory, setSelectedCategory] = useState(Object.keys(categories)[0]);
+  const [selectedReasonCode, setSelectedReasonCode] = useState(categories[selectedCategory][0]);
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [events, setEvents] = useState([]);
@@ -24,6 +40,22 @@ const EventModal = ({ isOpen, onClose, onEventSelect }) => {
         <ModalCloseButton />
         <ModalBody>
           <FormControl mb={4}>
+            <FormLabel>Category</FormLabel>
+            <Select placeholder="Select category" value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
+              {Object.keys(categories).map((category) => (
+                <option key={category} value={category}>{category}</option>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl mb={4}>
+            <FormLabel>Reason Code</FormLabel>
+            <Select placeholder="Select reason code" value={selectedReasonCode} onChange={(e) => setSelectedReasonCode(e.target.value)}>
+              {categories[selectedCategory].map((reasonCode) => (
+                <option key={reasonCode} value={reasonCode}>{reasonCode}</option>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl mb={4}>
             <FormLabel>From Date</FormLabel>
             <Input type="datetime-local" value={fromDate} onChange={(e) => setFromDate(e.target.value)} />
           </FormControl>
@@ -41,16 +73,27 @@ const EventModal = ({ isOpen, onClose, onEventSelect }) => {
               </ListItem>
             ))}
           </List>
-        </ModalBody>
-        <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={() => onEventSelect(selectedEvent)} isDisabled={!selectedEvent}>
-            Next
-          </Button>
-          <Button onClick={onClose}>Cancel</Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
-  );
-};
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={() => onEventSelect({ ...selectedEvent, category: selectedCategory, reasonCode: selectedReasonCode })} isDisabled={!selectedEvent}>
+              Next
+            </Button>
+            <Button onClick={onClose}>Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+      {useEffect(() => {
+        setSelectedReasonCode(categories[selectedCategory][0]);
+      }, [selectedCategory])}
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={() => onEventSelect({ ...selectedEvent, category: selectedCategory, reasonCode: selectedReasonCode })} isDisabled={!selectedEvent}>
+              Next
+            </Button>
+            <Button onClick={onClose}>Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    );
+  };
 
-export default EventModal;
+  export default EventModal;

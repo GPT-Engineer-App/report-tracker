@@ -103,15 +103,18 @@ const Index = () => {
         </FormControl>
 
         <FormControl isRequired mb={4}>
-          <FormLabel>Category</FormLabel>
-          <ButtonGroup mb={4}>
-            <Button colorScheme={category === "Electrical Power Surge/Outage" ? "blue" : "gray"} onClick={() => setCategory("Electrical Power Surge/Outage")} isActive={category === "Electrical Power Surge/Outage"}>
-              Electrical Power Surge/Outage
-            </Button>
-            <Button colorScheme={category === "Electrical Electrical Overload" ? "blue" : "gray"} onClick={() => setCategory("Electrical Electrical Overload")} isActive={category === "Electrical Electrical Overload"}>
-              Electrical Electrical Overload
-            </Button>
-          </ButtonGroup>
+          <FormLabel htmlFor="category">Category</FormLabel>
+          <Select id="category" placeholder="Select category" value={category} onChange={(e) => setCategory(e.target.value)}>
+            <option value="Electrical">Electrical</option>
+            <option value="Mechanical">Mechanical</option>
+            <option value="Instrument">Instrument</option>
+            <option value="Product">Product</option>
+            <option value="(PLC) Control System">(PLC) Control System</option>
+            <option value="Operational">Operational</option>
+            <option value="Documentation Control Error">Documentation Control Error</option>
+            <option value="Foreign Object">Foreign Object</option>
+            <option value="Product Quality">Product Quality</option>
+          </Select>
         </FormControl>
 
         <FormControl isRequired mb={4}>

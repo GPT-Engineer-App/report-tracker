@@ -11,6 +11,7 @@ const calculateDowntimeDuration = (from, to) => {
 };
 
 const Index = () => {
+  const [eventId, setEventId] = useState(null);
   const [image, setImage] = useState(null);
   const [reports, setReports] = useState([]);
   const [category, setCategory] = useState("");
@@ -23,10 +24,12 @@ const Index = () => {
   const closeModal = () => setIsModalOpen(false);
 
   const handleEventSelect = (event) => {
+    setEventId(event.id);
     setFrom(event.from);
     setTo(event.to);
     setCategory(event.category);
     setDescription(event.description);
+    setEventId(event.id);
     closeModal();
   };
 
@@ -37,6 +40,7 @@ const Index = () => {
     const downtimeDuration = calculateDowntimeDuration(from, to);
     const newReport = {
       reportId: crypto.randomUUID(),
+      eventId: eventId,
       area: e.target.area.value,
       asset: e.target.asset.value,
       from,
@@ -128,7 +132,12 @@ const Index = () => {
             <Flex justify="space-between" align="center">
               <Box>
                 <Text fontWeight="bold">Report ID:</Text>
+                <Text fontWeight="bold">Report ID:</Text>
                 <Text>{report.reportId}</Text>
+                <Text fontWeight="bold">Event ID:</Text>
+                <Text>{report.eventId}</Text>
+                <Text fontWeight="bold">Event ID:</Text>
+                <Text>{report.eventId}</Text>
                 <Text fontWeight="bold">Area:</Text>
                 <Text>{report.area}</Text>
                 <Text fontWeight="bold">Asset:</Text>

@@ -1,7 +1,17 @@
-import React, { useState } from "react";
-import { Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, FormControl, FormLabel, Input, List, ListItem } from "@chakra-ui/react";
+import React, { useState, useEffect } from "react";
+import categories from "../categories.json";
+import { Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, FormControl, FormLabel, Input, List, ListItem, Select } from "@chakra-ui/react";
 
 const EventModal = ({ isOpen, onClose, onEventSelect }) => {
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [reasonCodes, setReasonCodes] = useState([]);
+  const [selectedReasonCode, setSelectedReasonCode] = useState("");
+
+  useEffect(() => {
+    if (selectedCategory) {
+      setReasonCodes(categories[selectedCategory]);
+    }
+  }, [selectedCategory]);
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [events, setEvents] = useState([]);
@@ -31,19 +41,29 @@ const EventModal = ({ isOpen, onClose, onEventSelect }) => {
             <FormLabel>To Date</FormLabel>
             <Input type="datetime-local" value={toDate} onChange={(e) => setToDate(e.target.value)} />
           </FormControl>
-          <Button onClick={fetchEvents} mb={4}>
-            Fetch Events
-          </Button>
-          <List spacing={3}>
-            {events.map((event) => (
-              <ListItem key={event.id} onClick={() => setSelectedEvent(event)} cursor="pointer" bg={selectedEvent?.id === event.id ? "gray.100" : "white"} p={2} borderRadius="md">
-                {event.description} ({new Date(event.from).toLocaleString()} - {new Date(event.to).toLocaleString()})
-              </ListItem>
-            ))}
-          </List>
+          <FormControl mb={4}>
+            <FormLabel>Category</FormLabel>
+            <Select placeholder="Select category" value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
+              {Object.keys(categories).map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl mb={4}>
+            <FormLabel>Reason Code</FormLabel>
+            <Select placeholder="Select reason code" value={selectedReasonCode} onChange={(e) => setSelectedReasonCode(e.target.value)} isDisabled={!selectedCategory}>
+              {reasonCodes.map((reasonCode, index) => (
+                <option key={index} value={reasonCode}>
+                  {reasonCode}
+                </option>
+              ))}
+            </Select>
+          </FormControl>
         </ModalBody>
         <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={() => onEventSelect(selectedEvent)} isDisabled={!selectedEvent}>
+          <Button colorScheme="blue" mr={3} onClick={() => onEventSelect({ ...selectedEvent, category: selectedCategory, reasonCode: selectedReasonCode })} isDisabled={!selectedEvent || !selectedReasonCode}>
             Next
           </Button>
           <Button onClick={onClose}>Cancel</Button>

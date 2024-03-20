@@ -1,7 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, FormControl, FormLabel, Input, List, ListItem, Select } from "@chakra-ui/react";
 
-const EventModal = ({ isOpen, onClose, onEventSelect, categories, rootCausesMapping }) => {
+const EventModal = ({ isOpen, onClose, onEventSelect, categories }) => {
+  const rootCausesMapping = {
+    Electrical: ["Power Surge/Outage", "Electrical Overload", "Wiring Issues", "Component Failure"],
+    Mechanical: ["Wear and Tear", "Lubrication Failure", "Misalignment of Shafts", "Overheating of Parts"],
+    Instrument: ["Sensor Malfunction", "Calibration Drift", "Communication Failure", "Power Supply Failure"],
+    Product: ["Design Flaws", "Specification Deviation", "Material Defect", "Assembly Error"],
+    "(PLC) Control System": ["Software Bugs/Errors", "PLC Hardware Failure", "Communication Network Breakdown", "Input/Output Device Malfunction"],
+    Operational: ["Operator Error", "Procedure Deviation", "Inadequate Training", "Supervision Lapse"],
+    "Documentation Control Error": ["Incorrect Data Entry", "Outdated Procedures or Manuals", "Missing Records or Logs", "Noncompliance with Regulations"],
+    "Foreign Object": ["Tool Left Inside Machinery", "Contamination", "Infiltration", "Debris Accumulation"],
+    "Product Quality": ["Tolerance Deviation", "Surface Defects", "Material Inconsistency", "Functional Test Failure"],
+  };
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedRootCause, setSelectedRootCause] = useState("");
   const [rootCauses, setRootCauses] = useState([]);
